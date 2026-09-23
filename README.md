@@ -53,11 +53,12 @@ cost), a Less→More legend, and streak lines: current streak, longest streak,
 active days, best day. Level thresholds are sqrt-scaled, so one 375M-token day
 cannot flatten every other day to the first step.
 
-**Graph icon on the Settings seat** — the sidebar Settings button's glyph is
-replaced by a bar-chart mark through a CSS mask
-(`button[aria-haspopup=dialog]::before` masking the `data-slot="settings.trigger"`
-row), so the tracker's own mark sits where you enter settings — without patching
-the shell package that owns that button.
+**Graph icon on the section's nav row** — the settings shell paints a fallback
+gear on every section that declares no icon (the section API takes `id` / `order`
+/ `label` only). The tracker tags its own nav row
+(`data-dtt-nav="token-usage"`, via a debounced `MutationObserver`) and masks that
+row's glyph into a bar-chart mark, so *only* the Token usage row changes — every
+other nav row and the sidebar Settings button keep their own icons.
 
 **Overview** — eight KPI tiles (billed tokens, new tokens, cache reads, estimated
 cost, per-turn, per-session, LLM time, decode speed) over a selectable window:
@@ -90,6 +91,10 @@ is reported as `—` and listed by name in the footer instead of being guessed. 
 your own prices in a small JSON file and the cost column fills in.
 
 ## Screenshots
+
+| Section icon in the settings nav |
+| --- |
+| ![Token usage row with the graph glyph](docs/ui-nav-icon.png) |
 
 | Profile header | Contribution graph |
 | --- | --- |
