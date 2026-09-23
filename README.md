@@ -9,7 +9,7 @@
 
 ![Token usage profile page](docs/ui-profile-header.png)
 
-*The page opens with a profile header — identity, live-session count, headline stats and badges — followed by the stat tiles, the contribution grid, and every breakdown table.*
+*The page opens with a profile header — identity, live-session count, headline stats and badges — followed by the stat tiles, the token activity monitor, and every breakdown table.*
 
 <details>
 <summary>Full page (long — the settings pane scrolls)</summary>
@@ -46,13 +46,22 @@ harness identity, home directory and timezone, then one line of counting facts
 (workspaces · turns · steps). Every number lives in exactly one place — the
 header repeats nothing that a tile or panel below already states.
 
-**Contribution graph** — a fixed 53-week grid, one 12px square per day: the
-newest day is always in the last column, the days before your first session stay
-empty squares, and that first session is ringed and named in the caption. Month
-labels, weekday rails, per-day tooltips (tokens · sessions · steps · cost), a
-Less→More legend, and streak lines (current, longest, best day). Level thresholds
-are sqrt-scaled, so one 375M-token day cannot flatten every other day to the
-first step.
+**Token activity monitor** — a fixed 53-week dot matrix, one circle per day, the
+newest day always in the last column and the days before your first session left
+blank. Three readings of the same grid, switched from the panel header:
+
+- **Daily** — the day's own tokens.
+- **Weekly** — the day's week total, so a column lights as one unit.
+- **Cumulative** — the running total through that day, a ramp that shows how the
+  year paces.
+
+Cells are sized from the measured pane width, so the matrix fills the settings
+pane exactly at any window size instead of scrolling or spilling. Month rail
+under the grid, Mon/Wed/Fri row rail, per-day tooltips (tokens · sessions · steps
+· cost), the first session ringed and named, a Less→More legend and streak lines
+(current, longest, best day). Levels are sqrt-scaled, so one 375M-token day cannot
+flatten every other day to the first step; the grid keeps each day on its true
+weekday row, so a column never shifts.
 
 **Graph icon on the section's nav row** — the settings shell paints a fallback
 gear on every section that declares no icon (the section API takes `id` / `order`
@@ -97,9 +106,13 @@ your own prices in a small JSON file and the cost column fills in.
 | --- |
 | ![Token usage row with the graph glyph](docs/ui-nav-icon.png) |
 
-| Profile header | Contribution graph |
+| Profile header | Token activity — daily |
 | --- | --- |
-| ![Profile header](docs/ui-profile-header.png) | ![Contribution graph](docs/ui-calendar.png) |
+| ![Profile header](docs/ui-profile-header.png) | ![Token activity monitor, daily](docs/ui-calendar.png) |
+
+| Token activity — weekly | Token activity — cumulative |
+| --- | --- |
+| ![Weekly reading of the dot matrix](docs/ui-12-activity-weekly.png) | ![Cumulative reading of the dot matrix](docs/ui-13-activity-cumulative.png) |
 
 | Breakdown by workspace | Per-turn drill-down |
 | --- | --- |
@@ -206,9 +219,10 @@ their sessions report `—` for cost. Add real per-million-token prices to
 ## How it works
 
 ```
-             ┌──────────────────────── Browser half (lib/client.js) ────────────────────────┐
-             │ one settings.section page: KPIs · activity chart · breakdown · cache ·       │
-             │ context · heatmap · sessions table · per-turn drill-down   (React, no build) │
+             ┌──────────────────────────────────────────────────────────────────────────────┐
+             │ one settings.section page: KPIs · token activity monitor · activity chart ·  │
+             │ breakdown · cache · context · heatmap · sessions table · per-turn            │
+             │ drill-down (React, no build step)                                            │
              └──────────────────────────────────▲───────────────────────────────────────────┘
                                                 │ GET /api/token-tracker (browser-trust fence)
              ┌──────────────────────────────────┴────────── Host half (lib/index.js) ────────┐
@@ -254,9 +268,16 @@ Measured, not asserted:
 * **Drill-down** — a 3,708-event / 12.5 MB log folded to per-turn rows in 1.9 s
   through the live service, rendering prompts, hit rates, retries (`342 (5r)`) and
   end reasons.
-* **UI** — mounted headless against the running harness: 8 KPI tiles, 6 panels, 25
+* **UI** — mounted headless against the running harness: 8 KPI tiles, 7 panels, 25
   session rows, 175 heatmap cells, window switching, grouping, sorting, filtering
   and drill-down, with no console or page errors.
+* **Token activity monitor** — 378 dots (54 weeks × 7), exactly 371 of them
+  carrying a day, and every one of those on its true weekday row (0 mismatches).
+  The three readings reconcile with the route payload: 8 lit days daily, 18
+  weekly (three uniform columns, no mixed levels), 14 cumulative (a
+  non-decreasing ramp ending at 1.32 B through today). Cells measured 6 px with a
+  3 px gap filling a 536 px settings pane with zero overflow; the weekday rail
+  and month labels align to the grid at 0 px drift in both themes.
 
 ## Limitations
 
