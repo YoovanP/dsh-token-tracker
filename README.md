@@ -41,17 +41,18 @@ Numbers from the author's own harness (142 sessions, six workspaces):
 
 ## Features
 
-**Profile header** — an identity strip in the shape of a profile page: the graph
-avatar, the harness identity plus timezone, headline stats (tokens, sessions,
-est. cost, cache hit), and a badge row (new tokens, in/out split, cache-read
-share of what was billed, cost coverage, priced catalog models, LLM time,
-unpriced routes, live overlays).
+**Profile header** — a deliberately minimal identity strip: the graph avatar, the
+harness identity, home directory and timezone, then one line of counting facts
+(workspaces · turns · steps). Every number lives in exactly one place — the
+header repeats nothing that a tile or panel below already states.
 
-**Contribution graph** — a 53-week contribution grid, one 12px square per day,
-with month labels, weekday rails, per-day tooltips (tokens · sessions · steps ·
-cost), a Less→More legend, and streak lines: current streak, longest streak,
-active days, best day. Level thresholds are sqrt-scaled, so one 375M-token day
-cannot flatten every other day to the first step.
+**Contribution graph** — a fixed 53-week grid, one 12px square per day: the
+newest day is always in the last column, the days before your first session stay
+empty squares, and that first session is ringed and named in the caption. Month
+labels, weekday rails, per-day tooltips (tokens · sessions · steps · cost), a
+Less→More legend, and streak lines (current, longest, best day). Level thresholds
+are sqrt-scaled, so one 375M-token day cannot flatten every other day to the
+first step.
 
 **Graph icon on the section's nav row** — the settings shell paints a fallback
 gear on every section that declares no icon (the section API takes `id` / `order`
