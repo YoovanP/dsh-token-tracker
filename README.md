@@ -7,7 +7,16 @@
 ![dsh](https://img.shields.io/badge/dsh-0.1.6--alpha.2-informational)
 ![plugin](https://img.shields.io/badge/dsh%20plugin-host%20%2B%20browser%20half-8a2be2)
 
-![Token usage page](docs/ui-03-token-usage.png)
+![Token usage profile page](docs/ui-profile-header.png)
+
+*The page opens with a profile header — identity, live-session count, headline stats and badges — followed by the stat tiles, the contribution grid, and every breakdown table.*
+
+<details>
+<summary>Full page (long — the settings pane scrolls)</summary>
+
+![Full token usage page](docs/ui-profile.png)
+
+</details>
 
 ---
 
@@ -31,6 +40,24 @@ Numbers from the author's own harness (142 sessions, six workspaces):
 | estimated cost | $133.67 (29.8 % of sessions priced from the catalog) |
 
 ## Features
+
+**Profile header** — an identity strip in the shape of a profile page: the graph
+avatar, the harness identity plus timezone, headline stats (tokens, sessions,
+est. cost, cache hit), and a badge row (new tokens, in/out split, cache-read
+share of what was billed, cost coverage, priced catalog models, LLM time,
+unpriced routes, live overlays).
+
+**Contribution graph** — a 53-week contribution grid, one 12px square per day,
+with month labels, weekday rails, per-day tooltips (tokens · sessions · steps ·
+cost), a Less→More legend, and streak lines: current streak, longest streak,
+active days, best day. Level thresholds are sqrt-scaled, so one 375M-token day
+cannot flatten every other day to the first step.
+
+**Graph icon on the Settings seat** — the sidebar Settings button's glyph is
+replaced by a bar-chart mark through a CSS mask
+(`button[aria-haspopup=dialog]::before` masking the `data-slot="settings.trigger"`
+row), so the tracker's own mark sits where you enter settings — without patching
+the shell package that owns that button.
 
 **Overview** — eight KPI tiles (billed tokens, new tokens, cache reads, estimated
 cost, per-turn, per-session, LLM time, decode speed) over a selectable window:
@@ -63,6 +90,10 @@ is reported as `—` and listed by name in the footer instead of being guessed. 
 your own prices in a small JSON file and the cost column fills in.
 
 ## Screenshots
+
+| Profile header | Contribution graph |
+| --- | --- |
+| ![Profile header](docs/ui-profile-header.png) | ![Contribution graph](docs/ui-calendar.png) |
 
 | Breakdown by workspace | Per-turn drill-down |
 | --- | --- |
