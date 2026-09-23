@@ -1,0 +1,29 @@
+# dsh-token-tracker — one insert over the profile root.
+#
+# The plugin has two halves:
+#   * lib/index.js  (Host)    reads every session's durable token-usage
+#                             projection and serves it over one authenticated
+#                             exact Fetch route on Connection's `/api` fence
+#                             (`/api/token-tracker`, plus `?session=<id>` for a
+#                             per-turn drill-down).
+#   * lib/client.js (Browser) registers one `settings.section` page
+#                             ("Token usage") that renders the aggregation.
+#
+# It requires the `connection` service (the Host Fetch seam) and, when the
+# composition provides them, reads live sessions through `sessions` +
+# `sessionProjections` so the active session is never stale.
+#
+# Configuration is optional; every field has a working default:
+#
+#   - id: token-tracker
+#     name: dsh-token-tracker
+#     config:
+#       home: ''            # Harness home override (default: $DSH_HOME, else ~/.dsh)
+#       cacheTtlMs: 4000    # aggregation reuse window for repeated UI reads
+#       detailTtlMs: 20000  # per-session drill-down reuse window
+#       catalogDir: ''      # pi-ai provider catalog dir (default: auto-resolved)
+#       overridesPath: ''   # price overrides JSON (default: <home>/token-tracker/pricing.json)
+
+- insert:
+    - id: token-tracker
+      name: dsh-token-tracker

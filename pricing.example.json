@@ -1,0 +1,11 @@
+{
+  "//": "Copy to <DSH_HOME>/token-tracker/pricing.json and put real prices in. Values are USD per million tokens. `routes` keys are `provider/model` (prefix match allowed); `models` keys match the model name alone.",
+  "routes": {
+    "opencode-go-v41/deepseek-flash": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+    "opencode-go-latest/mimo-v2.6-flash": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+    "openai-codex/gpt-6-sol": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+  },
+  "models": {
+    "deepseek-flash": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+  }
+}

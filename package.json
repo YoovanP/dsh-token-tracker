@@ -1,0 +1,55 @@
+{
+  "name": "dsh-token-tracker",
+  "version": "0.1.0",
+  "description": "Extensive token and cost accounting for the DeepSeek Harness: a stat-heavy Token usage page in Settings over every session's durable usage projections.",
+  "type": "module",
+  "license": "MIT",
+  "author": "YoovanP",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoovanP/dsh-token-tracker.git"
+  },
+  "homepage": "https://github.com/YoovanP/dsh-token-tracker#readme",
+  "bugs": {
+    "url": "https://github.com/YoovanP/dsh-token-tracker/issues"
+  },
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "tokens",
+    "token-usage",
+    "usage",
+    "cost",
+    "dashboard",
+    "settings"
+  ],
+  "engines": {
+    "node": ">=20.3"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings"
+      ],
+      "platform": "web"
+    },
+    "bundle": {
+      "patch": "cordis.patch.yml"
+    }
+  }
+}
